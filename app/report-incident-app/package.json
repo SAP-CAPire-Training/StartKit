@@ -1,0 +1,27 @@
+{
+  "name": "report-incident-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "An SAP Fiori application.",
+  "keywords": [
+    "ui5",
+    "openui5",
+    "sapui5"
+  ],
+  "main": "webapp/index.html",
+  "dependencies": {
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "@sap/eslint-plugin-ui5-jsdocs": "2.0.5",
+    "@sap/ux-ui5-tooling": "1",
+    "@sapui5/ts-types": "~1.120.0",
+    "@ui5/cli": "^3.0.0",
+    "eslint": "7.32.0"
+  },
+  "scripts": {
+    "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+    "deploy": "fiori verify",
+    "deploy-config": "fiori add deploy-config"
+  }
+}

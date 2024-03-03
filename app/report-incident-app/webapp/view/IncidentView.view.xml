@@ -1,0 +1,574 @@
+<mvc:View
+    controllerName="reportincidentapp.controller.IncidentView"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Page
+        id="idUpdateIncident"
+        navButtonPress="onNavBack"
+        title="Incident Managment"
+        class="sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+        showNavButton="true"
+    >
+        <headerContent>
+            <Button
+                text="{= !${globalModel>/edit_flag} ? 'Edit' : 'Save'}"
+                press="onIncidentEdit"
+                type="{= !${globalModel>/edit_flag} ? 'Emphasized' : 'Accept'}"
+                icon="{= !${globalModel>/edit_flag} ? 'sap-icon://edit' : 'sap-icon://save'}"
+                tooltip="{= !${globalModel>/edit_flag} ? 'Edit' : 'Save'}"
+            />
+        </headerContent>
+        <content>
+            <IconTabBar
+                headerMode="Inline"
+                expanded="true"
+                stretchContentHeight="true"
+                class="sapUiResponsiveContentPadding"
+            >
+                <items>
+                    <IconTabFilter
+                        text="Incident Info"
+                        key="info"
+                    >
+                        <ScrollContainer
+                            height="100%"
+                            vertical="true"
+                            horizontal="false"
+                        >
+                            <VBox class="sapUiTinyMargin">
+                                <f:Form editable="true">
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            labelSpanXL="4"
+                                            labelSpanL="3"
+                                            labelSpanM="4"
+                                            labelSpanS="12"
+                                            adjustLabelSpan="false"
+                                            emptySpanXL="0"
+                                            emptySpanL="4"
+                                            emptySpanM="0"
+                                            emptySpanS="0"
+                                            columnsXL="2"
+                                            columnsL="1"
+                                            columnsM="1"
+                                            singleContainerFullSize="false"
+                                        />
+                                    </f:layout>
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement
+                                                    label="Reported By"
+                                                >
+                                                    <f:fields>
+                                                        <Input
+                                                            editable="false"
+                                                            value="{globalModel>/view_incident/reported_by}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement
+                                                    label="Title / Role"
+                                                >
+                                                    <f:fields>
+                                                        <Input
+                                                            editable="false"
+                                                            value="{globalModel>/view_incident/title_role}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement
+                                                    label="Date of Report"
+                                                >
+                                                    <f:fields>
+                                                        <DatePicker
+                                                            editable="false"
+                                                            value="{globalModel>/view_incident/date_of_report}"
+                                                            valueFormat="yyyy-MM-dd"
+                                                            displayFormat="dd-MM-yyyy"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement
+                                                    label="Incident No"
+                                                >
+                                                    <f:fields>
+                                                        <Input
+                                                            editable="false"
+                                                            value="{globalModel>/view_incident/ID}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+                                <f:Form editable="true">
+                                    <f:title>
+                                        <core:Title
+                                            text="Incident Information"
+                                        />
+                                    </f:title>
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            labelSpanXL="4"
+                                            labelSpanL="3"
+                                            labelSpanM="4"
+                                            labelSpanS="12"
+                                            adjustLabelSpan="false"
+                                            emptySpanXL="0"
+                                            emptySpanL="4"
+                                            emptySpanM="0"
+                                            emptySpanS="0"
+                                            columnsXL="2"
+                                            columnsL="1"
+                                            columnsM="1"
+                                            singleContainerFullSize="false"
+                                        />
+                                    </f:layout>
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement
+                                                    label="Incident Type"
+                                                >
+                                                    <f:fields>
+                                                        <ComboBox
+                                                            editable="{globalModel>/edit_flag}"
+                                                            change="_comboBoxValidate"
+                                                            value="{globalModel>/view_incident/incident_type}"
+                                                            items="{
+                                                            path: '/MasterData',
+                                                            filters: [{
+                                                                path: 'type',
+                                                                operator: 'EQ',
+                                                                value1: 'Incident Type' 
+                                                            }]}"
+                                                        >
+                                                            <core:Item
+                                                                text="{name}"
+                                                            />
+                                                        </ComboBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement label="Location">
+                                                    <f:fields>
+                                                        <ComboBox
+                                                            editable="{globalModel>/edit_flag}"
+                                                            change="_comboBoxValidate"
+                                                            value="{globalModel>/view_incident/location}"
+                                                            items="{
+                                                            path: '/MasterData',
+                                                            filters: [{
+                                                                path: 'type',
+                                                                operator: 'EQ',
+                                                                value1: 'Location' 
+                                                            }]}"
+                                                        >
+                                                            <core:Item
+                                                                text="{name}"
+                                                            />
+                                                        </ComboBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement
+                                                    label="Date of Incident"
+                                                >
+                                                    <f:fields>
+                                                        <DatePicker
+                                                            editable="{globalModel>/edit_flag}"
+                                                            value="{globalModel>/view_incident/date_of_incident}"
+                                                            valueFormat="yyyy-MM-dd"
+                                                            displayFormat="dd-MM-yyyy"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement
+                                                    label="Specific Area of Location"
+                                                >
+                                                    <f:fields>
+                                                        <Input
+                                                            editable="{globalModel>/edit_flag}"
+                                                            maxLength="100"
+                                                            liveChange="_maxLengthValidation"
+                                                            value="{globalModel>/view_incident/specific_area_of_location}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement label="City">
+                                                    <f:fields>
+                                                        <ComboBox
+                                                            editable="{globalModel>/edit_flag}"
+                                                            change="_comboBoxValidate"
+                                                            value="{globalModel>/view_incident/city}"
+                                                            items="{
+                                                            path: '/MasterData',
+                                                            filters: [{
+                                                                path: 'type',
+                                                                operator: 'EQ',
+                                                                value1: 'City' 
+                                                            }]}"
+                                                        >
+                                                            <core:Item
+                                                                text="{name}"
+                                                            />
+                                                        </ComboBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement label="State">
+                                                    <f:fields>
+                                                        <ComboBox
+                                                            editable="{globalModel>/edit_flag}"
+                                                            change="_comboBoxValidate"
+                                                            value="{globalModel>/view_incident/state}"
+                                                            items="{
+                                                            path: '/MasterData',
+                                                            filters: [{
+                                                                path: 'type',
+                                                                operator: 'EQ',
+                                                                value1: 'State' 
+                                                            }]}"
+                                                        >
+                                                            <core:Item
+                                                                text="{name}"
+                                                            />
+                                                        </ComboBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement label="Zip Code">
+                                                    <f:fields>
+                                                        <MaskInput
+                                                            editable="{globalModel>/edit_flag}"
+                                                            mask="999999"
+                                                            placeholderSymbol="_"
+                                                            showClearIcon="false"
+                                                            value="{globalModel>/view_incident/zip_code}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+                                <VBox width="100%">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Label text="Incident Description" />
+                                        <Button
+                                            visible="{globalModel>/edit_flag}"
+                                            press="onMicPress"
+                                            type="Ghost"
+                                            icon="sap-icon://microphone"
+                                        />
+                                    </HBox>
+                                    <TextArea
+                                        editable="{globalModel>/edit_flag}"
+                                        liveChange="_maxLengthValidation"
+                                        maxLength="2000"
+                                        value="{globalModel>/view_incident/incident_description}"
+                                        width="100%"
+                                        rows="4"
+                                    />
+                                </VBox>
+                                <f:Form editable="true">
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            labelSpanXL="4"
+                                            labelSpanL="3"
+                                            labelSpanM="4"
+                                            labelSpanS="12"
+                                            adjustLabelSpan="false"
+                                            emptySpanXL="0"
+                                            emptySpanL="4"
+                                            emptySpanM="0"
+                                            emptySpanS="0"
+                                            columnsXL="2"
+                                            columnsL="1"
+                                            columnsM="1"
+                                            singleContainerFullSize="false"
+                                        />
+                                    </f:layout>
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement
+                                                    label="Police Report Filed?"
+                                                >
+                                                    <f:fields>
+                                                        <Switch
+                                                            enabled="{globalModel>/edit_flag}"
+                                                            customTextOn="Yes"
+                                                            customTextOff="No"
+                                                            state="{globalModel>/view_incident/police_report_filed}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement
+                                                    label="Reporting Officer"
+                                                >
+                                                    <f:fields>
+                                                        <Input
+                                                            editable="{globalModel>/edit_flag}"
+                                                            maxLength="50"
+                                                            liveChange="_maxLengthValidation"
+                                                            value="{globalModel>/view_incident/reporting_officer}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement label="Precinct">
+                                                    <f:fields>
+                                                        <Input
+                                                            editable="{globalModel>/edit_flag}"
+                                                            maxLength="50"
+                                                            liveChange="_maxLengthValidation"
+                                                            value="{globalModel>/view_incident/precinct}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement label="Phone">
+                                                    <f:fields>
+                                                        <MaskInput
+                                                            editable="{globalModel>/edit_flag}"
+                                                            mask="(999) 999 999999"
+                                                            placeholderSymbol="_"
+                                                            showClearIcon="false"
+                                                            value="{globalModel>/view_incident/phone}"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+                                <VBox width="100%">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Label text="Follow Up Action" />
+                                        <Button
+                                            visible="{globalModel>/edit_flag}"
+                                            press="onMicPress"
+                                            type="Ghost"
+                                            icon="sap-icon://microphone"
+                                        />
+                                    </HBox>
+                                    <TextArea
+                                        editable="{globalModel>/edit_flag}"
+                                        maxLength="2000"
+                                        liveChange="_maxLengthValidation"
+                                        value="{globalModel>/view_incident/follow_up_action}"
+                                        width="100%"
+                                        rows="4"
+                                    />
+                                </VBox>
+                            </VBox>
+                        </ScrollContainer>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        text="Involved People"
+                        key="involved"
+                        count="{= ${globalModel>/view_incident/involved}.length}"
+                    >
+                        <Table
+                            autoPopinMode="true"
+                            contextualWidth="Auto"
+                            items="{globalModel>/view_incident/involved}"
+                            selectionChange="onSelectionChange"
+                            noDataText="No data"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            inset="false"
+                            mode="SingleSelectMaster"
+                            class="sapUiResponsiveContentPadding"
+                        >
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <content>
+                                        <Title
+                                            text="Involved People"
+                                            level="H2"
+                                        />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            visible="{globalModel>/edit_flag}"
+                                            press="onUpdateIncidentAddInvolvePeople"
+                                            type="Emphasized"
+                                            text="Add More"
+                                            icon="sap-icon://add"
+                                        />
+                                    </content>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column>
+                                    <Text text="Name" />
+                                </Column>
+                                <Column>
+                                    <Text text="Role" />
+                                </Column>
+                                <Column>
+                                    <Text text="Contact" />
+                                </Column>
+                                <Column
+                                    visible="{globalModel>/edit_flag}"
+                                    width="2.5rem"
+                                >
+                                    <Text text="" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Input
+                                            editable="{globalModel>/edit_flag}"
+                                            liveChange="_maxLengthValidation"
+                                            maxLength="50"
+                                            value="{globalModel>name}"
+                                        />
+                                        <ComboBox
+                                            width="100%"
+                                            editable="{globalModel>/edit_flag}"
+                                            change="_comboBoxValidate"
+                                            value="{globalModel>role}"
+                                            items="{
+                                        path: '/MasterData',
+                                        filters: [{
+                                            path: 'type',
+                                            operator: 'EQ',
+                                            value1: 'Role' 
+                                        }]}"
+                                        >
+                                            <core:Item text="{name}" />
+                                        </ComboBox>
+                                        <MaskInput
+                                            editable="{globalModel>/edit_flag}"
+                                            width="100%"
+                                            mask="(999) 999 999999"
+                                            placeholderSymbol="_"
+                                            showClearIcon="false"
+                                            value="{globalModel>contact}"
+                                        />
+                                        <Button
+                                            visible="{= ${globalModel>/edit_flag} &amp;&amp; ${globalModel>/create_incident/involved}.length > 1}"
+                                            press="onCreateIncidentDeleteInvolvePeople"
+                                            type="Reject"
+                                            icon="sap-icon://delete"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        text="Witness"
+                        key="witness"
+                        count="{= ${globalModel>/view_incident/witnesses}.length}"
+                    >
+                        <Table
+                            autoPopinMode="true"
+                            contextualWidth="Auto"
+                            items="{globalModel>/view_incident/witnesses}"
+                            selectionChange="onSelectionChange"
+                            noDataText="No data"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            inset="false"
+                            mode="SingleSelectMaster"
+                            class="sapUiResponsiveContentPadding"
+                        >
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <content>
+                                        <Title
+                                            text="Witnesses"
+                                            level="H2"
+                                        />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            visible="{globalModel>/edit_flag}"
+                                            press="onUpdateIncidentAddWitness"
+                                            type="Emphasized"
+                                            text="Add More"
+                                            icon="sap-icon://add"
+                                        />
+                                    </content>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column>
+                                    <Text text="Name" />
+                                </Column>
+                                <Column>
+                                    <Text text="Role" />
+                                </Column>
+                                <Column>
+                                    <Text text="Contact" />
+                                </Column>
+                                <Column
+                                    visible="{globalModel>/edit_flag}"
+                                    width="2.5rem"
+                                >
+                                    <Text text="" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Input
+                                            editable="{globalModel>/edit_flag}"
+                                            liveChange="_maxLengthValidation"
+                                            maxLength="50"
+                                            value="{globalModel>name}"
+                                        />
+                                        <ComboBox
+                                            width="100%"
+                                            editable="{globalModel>/edit_flag}"
+                                            change="_comboBoxValidate"
+                                            value="{globalModel>role}"
+                                            items="{
+                                        path: '/MasterData',
+                                        filters: [{
+                                            path: 'type',
+                                            operator: 'EQ',
+                                            value1: 'Role' 
+                                        }]}"
+                                        >
+                                            <core:Item text="{name}" />
+                                        </ComboBox>
+                                        <MaskInput
+                                            editable="{globalModel>/edit_flag}"
+                                            width="100%"
+                                            mask="(999) 999 999999"
+                                            placeholderSymbol="_"
+                                            showClearIcon="false"
+                                            value="{globalModel>contact}"
+                                        />
+                                        <Button
+                                            visible="{= ${globalModel>/edit_flag} &amp;&amp; ${globalModel>/create_incident/witnesses}.length > 1}"
+                                            press="onUpdateIncidentDeleteWitness"
+                                            type="Reject"
+                                            icon="sap-icon://delete"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>

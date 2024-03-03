@@ -1,0 +1,1 @@
+using ReportIncident as service from '../../srv/service';
