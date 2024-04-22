@@ -1,0 +1,6 @@
+PersonnelNumber,EmployeeName,DateOfBirth,Gender,AddressNumber,EmploymentStartDate
+1001,John Doe,1985-07-15,Male,12345,2010-05-20
+1002,Jane Smith,1988-09-22,Female,54321,2015-02-10
+1003,Michael Johnson,1979-12-10,Male,98765,2008-11-30
+1004,Emily Brown,1990-03-25,Female,13579,2017-08-15
+1005,David Wilson,1982-06-18,Male,24680,2012-04-05

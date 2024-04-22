@@ -1,1 +1,2 @@
-using from './report-incident-app/annotations';
+
+using from './employee_info/annotations';

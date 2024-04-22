@@ -1,7 +1,7 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "reportincidentapp",
+    "id": "employeeinfo",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -12,16 +12,29 @@
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:basic",
-      "version": "1.12.4",
-      "toolsId": "dbff1616-9645-4460-83f6-b5b7939ce30a"
+      "version": "1.13.2",
+      "toolsId": "19664eb2-a188-49b5-a10e-2ffaa44cb05d"
     },
     "dataSources": {
       "mainService": {
-        "uri": "/browse/",
+        "uri": "/odata/v4/employee-information/",
         "type": "OData",
         "settings": {
           "annotations": [],
           "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "Employee_Info-Display": {
+          "semanticObject": "Employee_Info",
+          "action": "Display",
+          "title": "{{flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
         }
       }
     }
@@ -43,9 +56,9 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": false,
+    "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.120.7",
+      "minUI5Version": "1.123.1",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -65,7 +78,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "reportincidentapp.i18n.i18n"
+          "bundleName": "employeeinfo.i18n.i18n"
         }
       },
       "": {
@@ -91,46 +104,32 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "reportincidentapp.view",
+        "viewPath": "employeeinfo.view",
         "controlAggregation": "pages",
         "controlId": "app",
         "clearControlAggregation": false
       },
       "routes": [
         {
-          "name": "RouteLandingView",
+          "name": "RouteWorklist",
           "pattern": ":?query:",
           "target": [
-            "TargetLandingView"
-          ]
-        },
-        {
-          "pattern": "Incident?id={objectId}",
-          "name": "object",
-          "target": [
-            "TargetIncidentView"
+            "TargetWorklist"
           ]
         }
       ],
       "targets": {
-        "TargetLandingView": {
+        "TargetWorklist": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "LandingView",
-          "viewName": "LandingView"
-        },
-        "TargetIncidentView": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "IncidentView",
-          "viewName": "IncidentView"
+          "viewId": "Worklist",
+          "viewName": "Worklist"
         }
       }
     },
     "rootView": {
-      "viewName": "reportincidentapp.view.App",
+      "viewName": "employeeinfo.view.App",
       "type": "XML",
       "async": true,
       "id": "App"
